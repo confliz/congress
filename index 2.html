@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Congress</title>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f3f5f8;--sheet:#fff;--ink:#151a22;--muted:#5d6675;--line:#d6dce5;--pro:#1f4fd8;--pro-t:#f1f5ff;--con:#b3261e;--con-t:#fff4f3;--or:#e8830c;--font:'Schibsted Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif}
+*{box-sizing:border-box}[hidden]{display:none!important}
+html,body{margin:0;background:var(--paper);color:var(--ink);font:400 15px/1.45 var(--font)}
+h1,h2{margin:0;letter-spacing:-.02em;line-height:1.1}h1{font-size:1.5rem}h2{font-size:1.05rem;margin:0 0 .6rem}
+.muted{color:var(--muted)}
+input,select,textarea,button{font:inherit;color:inherit}
+input,select,textarea{padding:.5rem .65rem;border:1px solid var(--line);border-radius:8px;background:var(--sheet);min-width:0}
+button{padding:.5rem .85rem;border:1px solid var(--line);border-radius:8px;background:var(--sheet);cursor:pointer;transition:transform 100ms ease-out}
+button:active{transform:scale(.97)}
+button.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+button.link{border:0;background:none;color:var(--muted);text-decoration:underline;padding:.3rem .5rem}
+button.danger:hover{color:var(--con);border-color:var(--con)}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.wrap{max-width:1100px;margin:0 auto;padding:1rem 1rem 3rem}
+.bar{display:flex;align-items:center;gap:.8rem;padding:.7rem 1rem;background:var(--sheet);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.ti{font-size:1.3rem;font-weight:700;letter-spacing:-.02em;border:1px solid transparent;background:transparent;flex:1;min-width:8ch}
+.ti:hover{border-color:var(--line)}.ti:focus{border-color:var(--ink);background:#fff;outline:none}
+.tbar{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:.6rem;padding:.5rem 1rem;background:var(--sheet);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.tm{font-size:2rem;font-weight:700;font-variant-numeric:tabular-nums;min-width:5.5ch}
+.flash{animation:fl .8s steps(1) infinite}@keyframes fl{50%{opacity:.2}}
+.grace{color:var(--or)}.over{color:var(--con)}
+.tabs{display:flex;gap:.3rem;padding:.6rem 1rem 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.tab{border-radius:10px 10px 0 0;border-bottom:0;margin-bottom:-1px;background:var(--paper)}.tab.on{background:var(--sheet);font-weight:600}
+.box{margin:0 0 1rem;padding:1rem;background:var(--sheet);border:1px solid var(--line);border-radius:10px}
+.rw{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin:.4rem 0}.rw input,.rw select{flex:1 1 160px}
+.ls{list-style:none;padding:0;margin:0 0 1rem;display:grid;gap:.5rem}.ls li{display:flex;gap:.4rem}
+.row{flex:1;display:flex;justify-content:space-between;gap:1rem;text-align:left;padding:.8rem 1rem;min-width:0}.row strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.big{width:100%;margin:.4rem 0}
+.rl{list-style:none;margin:0;padding:0;display:grid;gap:.4rem}
+.rl li{display:flex;align-items:center;gap:.6rem;padding:.4rem .7rem;background:var(--sheet);border:1px solid var(--line);border-radius:8px;cursor:grab}
+.rl .n{width:2.2ch;color:var(--muted);font-variant-numeric:tabular-nums}
+.rl .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left;border:0;background:none;padding:.3rem 0;font-weight:500}
+.rl li.me{border-color:var(--pro);background:var(--pro-t)}
+.ct{color:var(--muted);font-size:.85rem;white-space:nowrap}
+.ban{padding:.6rem .8rem;border-radius:8px;background:var(--sheet);border:1px solid var(--line);margin:.6rem 0}.ban.near{background:var(--pro-t);border-color:var(--pro);font-weight:600}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:.8rem}
+.fh{padding:.5rem .7rem;background:var(--sheet);border-top:3px solid;font-weight:600}.fh.a{border-color:var(--pro);color:var(--pro)}.fh.n{border-color:var(--con);color:var(--con)}
+.cell{border:0;border-radius:0;resize:none;min-height:2.6rem;field-sizing:content;line-height:1.35;overflow-wrap:anywhere}.cell.a{background:var(--pro-t)}.cell.n{background:var(--con-t)}.cell:focus{background:#fff;outline:2px solid var(--ink);outline-offset:-2px}
+.div{grid-column:1/-1;background:var(--sheet);border-top:3px solid var(--ink);display:flex;justify-content:flex-end;padding:0 .4rem}
+.sug{min-height:2.4rem;display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;padding:.3rem 0}
+.sug:empty::before{content:'Type two letters of a name to get suggestions';color:var(--muted)}
+.chip{padding:.25rem .65rem;font-size:.9rem}
+.card{padding:.8rem 1rem;margin:.6rem 0;background:var(--sheet);border:1px solid var(--line);border-radius:10px;overflow-wrap:anywhere}.card p{margin:.4rem 0;white-space:pre-wrap}
+.scroll{overflow-x:auto;margin-top:.6rem}
+table{width:100%;border-collapse:collapse;background:var(--sheet)}th,td{border:1px solid var(--line);padding:.4rem .6rem;text-align:left;vertical-align:top}
+@media(prefers-reduced-motion:reduce){button{transition:none}}
+.mvb{display:flex;gap:.2rem}.mvb button{padding:.2rem .5rem}
+.ql{list-style:none;padding:0;margin:.6rem 0 0;display:grid;gap:.4rem}.ql li{display:flex;gap:.4rem;align-items:center;padding:.4rem .6rem;border:1px solid var(--line);border-radius:8px}.ql li.flag{border-color:var(--or);background:#fff7ec}.qt{flex:1}
+textarea.big{width:100%}
+.mback{position:fixed;inset:0;background:rgba(21,26,34,.5);display:grid;place-items:center;z-index:50;overflow:hidden}
+.mod{background:var(--sheet);border-radius:12px;padding:1.5rem;max-width:340px;width:90%;text-align:center;position:relative;z-index:2}.mod .rw{justify-content:center}
+.em{font-size:3rem;margin:.5rem 0;animation:pop .5s ease-out}.em.sad{animation:sag 1.4s ease-in-out infinite alternate}
+.cf{position:absolute;top:-12px;width:9px;height:14px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg)}}@keyframes pop{from{transform:scale(.3)}}@keyframes sag{to{transform:translateY(14px) rotate(-12deg)}}
+@media(prefers-reduced-motion:reduce){.cf{display:none}.em,.em.sad{animation:none}}
+.ql li{flex-wrap:wrap}.ql li.done .qt{text-decoration:line-through;color:var(--muted)}.ql li.done{background:var(--paper)}
+.nt{padding:.15rem .6rem;border-radius:8px 8px 0 0;font-size:.85rem;background:var(--paper)}.nt.on{background:var(--sheet);font-weight:600}
+.qn{flex-basis:100%;width:100%}
+
+.rt{padding:.5rem .65rem;white-space:pre-wrap;overflow-wrap:anywhere;outline:none;min-width:0;cursor:text}
+.rt:empty::before{content:attr(data-ph);color:var(--muted);pointer-events:none}
+.rt span[style*=background]{border-radius:.2em}
+.bx{min-height:3.2rem;border:1px solid var(--line);border-radius:8px;background:var(--sheet)}.bx.lg{min-height:22rem}.bx:focus{outline:2px solid var(--ink);outline-offset:2px}
+.fmt{min-width:2.4rem}
+#hlp{position:fixed;z-index:60;display:flex;gap:.6rem;padding:.5rem .7rem;border-radius:999px;background:rgba(255,255,255,.5);-webkit-backdrop-filter:blur(18px) saturate(1.8);backdrop-filter:blur(18px) saturate(1.8);border:1px solid rgba(255,255,255,.75);box-shadow:0 10px 30px rgba(21,26,34,.22),inset 0 1px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(255,255,255,.25);transform:translateX(-50%) scale(.92);opacity:0;pointer-events:none;transition:opacity .12s ease-out,transform .12s ease-out}
+#hlp.on{opacity:1;transform:translateX(-50%) scale(1);pointer-events:auto}
+#hlp .hc{width:28px;height:28px;padding:0;border-radius:50%;border:1.5px solid rgba(255,255,255,.95);box-shadow:inset 0 2px 3px rgba(255,255,255,.75),0 1px 4px rgba(21,26,34,.28)}
+@media(prefers-reduced-motion:reduce){#hlp{transition:none}}
+</style>
+</head>
+<body>
+<div class="tbar" id="tbar" hidden>
+  <span class="tm" id="tm">3:00</span>
+  <button class="primary" id="tgo">Start</button>
+  <button id="trs">Reset</button>
+  <span id="pre" class="rw"></span>
+  <span class="muted">Space starts or pauses</span>
+</div>
+<div id="app"></div>
+<script>
+const $=s=>document.querySelector(s);
+const h=(t,a={},...k)=>{const e=document.createElement(t);for(const[x,v]of Object.entries(a)){if(x=='class')e.className=v;else if(x.startsWith('on'))e.addEventListener(x.slice(2),v);else if(v!==false&&v!=null)e.setAttribute(x,v===true?'':v)}k.flat().forEach(c=>e.append(c));return e};
+let db={sessions:[]};try{const d=JSON.parse(localStorage.getItem('congress:v1'));if(d&&d.sessions)db=d}catch{}
+const save=()=>{try{localStorage.setItem('congress:v1',JSON.stringify(db))}catch{}};
+const uid=()=>Math.random().toString(36).slice(2,9);
+const mount=(...n)=>$('#app').replaceChildren(...n);
+const ord=n=>{const s=['th','st','nd','rd'],v=n%100;return n+(s[(v-20)%10]||s[v]||s[0])};
+let S=null,tab='recency',rt='sp';
+
+/* ---------- rich text: paste keeps bold, italic, color; glass highlighter ---------- */
+const esc=t=>String(t||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const toH=t=>esc(t).replace(/\n/g,'<br>');
+const gh=(o,k)=>o[k+'H']!=null?o[k+'H']:toH(o[k]);
+const parse=x=>new DOMParser().parseFromString('<body>'+x,'text/html').body;
+const BLK=/^(p|div|li|h[1-6]|tr|ul|ol|table)$/,SKIP=/^(style|script|meta|link|title|head|img|iframe|object)$/;
+function clean(node,bg){let out='';node.childNodes.forEach(n=>{
+if(n.nodeType==3){out+=esc(n.nodeValue);return}
+if(n.nodeType!=1)return;
+const t=n.tagName.toLowerCase(),st=n.style||{};
+if(SKIP.test(t))return;
+if(t=='br'){out+='<br>';return}
+let x=clean(n,bg);
+if(BLK.test(t)&&out&&!/<br>$/.test(out))out+='<br>';
+if(!x){return}
+const fw=st.fontWeight,b=(/^(b|strong)$/.test(t)&&fw!='normal'&&fw!='400')||fw=='bold'||+fw>=600;
+const it=/^(i|em)$/.test(t)||st.fontStyle=='italic';
+const c=st.color&&!/^(rgb\(0, ?0, ?0\)|#000(000)?|black)$/i.test(st.color)?st.color:'';
+const g=bg&&st.backgroundColor&&st.backgroundColor!='transparent'&&!/rgba\(0, ?0, ?0, ?0\)/.test(st.backgroundColor)?st.backgroundColor:'';
+if(b)x='<b>'+x+'</b>';if(it)x='<i>'+x+'</i>';
+if(c||g)x='<span style="'+(c?'color:'+c+';':'')+(g?'background-color:'+g+';':'')+'">'+x+'</span>';
+if(BLK.test(t)&&!/<br>$/.test(x))x+='<br>';
+out+=x});return out.replace(/(<br>)+$/,'')}
+function rte(o,k,a={},tag='div'){
+const e=h(tag,{...a,contenteditable:true});e.classList.add('rt');e.innerHTML=clean(parse(gh(o,k)),1);
+e.addEventListener('input',()=>{if(!e.textContent)e.innerHTML='';o[k+'H']=e.innerHTML;o[k]=e.innerText;save()});
+e.addEventListener('paste',ev=>{ev.preventDefault();const d=ev.clipboardData,x=d.getData('text/html');document.execCommand('insertHTML',false,x?clean(parse(x)):toH(d.getData('text/plain')))});
+return e}
+const fb=(l,c,t)=>h('button',{class:'fmt',type:'button','aria-label':t,title:t+' (Ctrl/Cmd+'+l+')',style:c=='italic'?'font-style:italic':'font-weight:700',onpointerdown:e=>{e.preventDefault();document.execCommand(c)}},l);
+const HC=[['Yellow','rgb(253, 224, 71)'],['Red','rgb(252, 129, 129)'],['Green','rgb(134, 239, 172)']];
+const hp=h('div',{id:'hlp',role:'toolbar','aria-label':'Highlight'},HC.map(([n,c])=>h('button',{class:'hc',type:'button',style:'background:'+c,'aria-label':n,title:n,onmousedown:e=>e.preventDefault(),onpointerdown:e=>{e.preventDefault();hl(c)}})));
+document.body.append(hp);
+function hl(c){document.execCommand('styleWithCSS',false,true);let v='';try{v=document.queryCommandValue('hiliteColor')||document.queryCommandValue('backColor')}catch{}
+document.execCommand('hiliteColor',false,v.replace(/\s/g,'')==c.replace(/\s/g,'')?'transparent':c);getSelection().collapseToEnd();hp.classList.remove('on')}
+const inRt=n=>{const e=n&&(n.nodeType==1?n:n.parentElement);return e&&e.closest('.rt')};
+function place(){const s=getSelection(),a=s.rangeCount&&!s.isCollapsed&&inRt(s.anchorNode);
+if(!a||a!==inRt(s.focusNode)){hp.classList.remove('on');return}
+const r=s.getRangeAt(0).getBoundingClientRect();hp.classList.add('on');
+const w=hp.offsetWidth,ht=hp.offsetHeight;let top=matchMedia('(pointer:coarse)').matches?r.bottom+16:r.top-ht-10;if(top<8)top=r.bottom+10;
+hp.style.top=top+'px';hp.style.left=Math.min(innerWidth-w/2-8,Math.max(w/2+8,r.left+r.width/2))+'px'}
+let raf=0;const sched=()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(place)};
+document.addEventListener('selectionchange',sched);addEventListener('scroll',sched,true);addEventListener('resize',sched);
+
+/* ---------- timer: 3:00 speech, flashes in last 30s, orange 10s grace, red after 3:10 ---------- */
+const T={tot:180000,left:180000,run:false,t0:0};
+const rem=()=>T.run?T.left-(Date.now()-T.t0):T.left;
+const fm=ms=>{const s=ms>=0?Math.ceil(ms/1000):Math.floor(-ms/1000);return(ms>=0?'':'+')+Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+function tick(){const ms=rem(),el=$('#tm');el.textContent=fm(ms);el.className='tm'+(T.run&&ms>0&&ms<=30000?' flash':'')+(ms<=0&&ms>-10000?' grace':'')+(ms<=-10000?' over':'');$('#tgo').textContent=T.run?'Pause':'Start'}
+const go=()=>{if(T.run){T.left=rem();T.run=false}else{T.t0=Date.now();T.run=true}tick()};
+const rs=()=>{T.run=false;T.left=T.tot;tick()};
+$('#tgo').onclick=go;$('#trs').onclick=rs;
+[['Speech 3:00',180000],['Question 1:00',60000],['Question 2:00',120000]].forEach(([l,ms])=>$('#pre').append(h('button',{onclick:()=>{T.tot=ms;rs()}},l)));
+setInterval(tick,100);tick();
+$('#tbar').addEventListener('click',e=>{if(e.target.tagName=='BUTTON')e.target.blur()});
+addEventListener('keydown',e=>{if(e.code=='Space'&&!$('#tbar').hidden&&!e.target.isContentEditable&&!/INPUT|TEXTAREA|SELECT|BUTTON/.test(e.target.tagName)){e.preventDefault();go()}});
+
+/* ---------- session list ---------- */
+const exp=()=>h('a',{href:URL.createObjectURL(new Blob([JSON.stringify(db)],{type:'application/json'})),download:'congress-backup.json'}).click();
+function showList(){
+  S=null;$('#tbar').hidden=true;const nt=note;note='';
+  const nm=h('input',{placeholder:'Session name, e.g. Tournament Session 1',maxlength:80,'aria-label':'Session name'});
+  const mk=()=>{if(!nm.value.trim()){nm.focus();nm.setAttribute('placeholder','Name it first, then Start session');return}const b={id:uid(),name:'Bill 1',rows:[{a:'',n:''},{a:'',n:''},{a:'',n:''}]};
+    const s={id:uid(),name:nm.value.trim()||'Untitled session',at:Date.now(),roster:[],me:'',sp:[],q:[],sn:{},qn:{},undo:[],bills:[b],bill:b.id,cards:[]};
+    db.sessions.unshift(s);save();openS(s)};
+  nm.onkeydown=e=>{if(e.key=='Enter')mk()};
+  const fi=h('input',{type:'file',accept:'.json',hidden:true,onchange:async e=>{try{const d=JSON.parse(await e.target.files[0].text());(d.sessions||[]).forEach(s=>{if(!db.sessions.some(x=>x.id==s.id))db.sessions.push(s)});save();showList()}catch{note='That file is not a Congress backup.';showList()}}});
+  const ul=h('ul',{class:'ls'},db.sessions.length?db.sessions.map(s=>h('li',{},
+    h('button',{class:'row',onclick:()=>openS(s)},h('strong',{},s.name),h('span',{class:'muted'},new Date(s.at).toLocaleDateString()+', '+s.roster.length+' senators')),
+    cfm==s.id?h('span',{class:'rw'},h('button',{class:'danger',onclick:()=>{db.sessions=db.sessions.filter(x=>x!=s);cfm=null;save();showList()}},'Yes, delete'),h('button',{onclick:()=>{cfm=null;showList()}},'Cancel')):h('button',{class:'danger',onclick:()=>{cfm=s.id;showList()}},'Delete'))):h('p',{class:'muted'},'No sessions yet. Start one above when a new chamber or PO begins.'));
+  mount(h('header',{class:'bar'},h('h1',{},'Congress')),
+    h('main',{class:'wrap'},
+      h('section',{class:'box'},h('h2',{},'New session'),h('div',{class:'rw'},nm,h('button',{class:'primary',onclick:mk},'Start session'))),
+      h('section',{},h('h2',{},'Your sessions'),ul),
+      h('section',{class:'box'},h('h2',{},'Backup'),h('p',{class:'muted'},'Sessions are saved in this browser only. Export a backup before clearing browser data.'),nt?h('p',{style:'color:var(--con)'},nt):'',h('div',{class:'rw'},h('button',{onclick:exp},'Export all'),h('button',{onclick:()=>fi.click()},'Import'),fi))));finals();
+}
+
+/* ---------- session shell ---------- */
+function openS(s){S=s;$('#tbar').hidden=false;draw()}
+function draw(){
+  const ti=h('input',{class:'ti',value:S.name,maxlength:80,'aria-label':'Session name',oninput:e=>{S.name=e.target.value;save()}});
+  const tabs=[['recency','Recency'],['flow','Flow'],['bill','Bill'],['cards','Evidence'],['motions','Motions']].map(([k,l])=>h('button',{class:'tab'+(tab==k?' on':''),onclick:()=>{tab=k;draw()}},l));
+  const body=h('main',{class:'wrap'});
+  mount(h('header',{class:'bar'},h('button',{onclick:showList},'Sessions'),ti),h('nav',{class:'tabs'},tabs),body);
+  ({recency:recencyV,flow:flowV,bill:billV,cards:cardsV,motions:motionsV})[tab](body);
+}
+
+/* ---------- recency ---------- */
+const rects=()=>Object.fromEntries([...document.querySelectorAll('[data-id]')].map(e=>[e.dataset.id,e.getBoundingClientRect().top]));
+function play(prev){if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;document.querySelectorAll('[data-id]').forEach(el=>{const d=prev[el.dataset.id]-el.getBoundingClientRect().top;if(d){el.style.transition='none';el.style.transform='translateY('+d+'px)';el.getBoundingClientRect();el.style.transition='transform .22s cubic-bezier(.2,.8,.2,1)';el.style.transform=''}})}
+const snap=()=>{S.undo.push(JSON.stringify([S.sp,S.q,S.sn,S.qn]));if(S.undo.length>50)S.undo.shift()};
+let reord=false,cfm=null,adding=false,note='',cur=null;
+function mv(id,to){const L=S[rt],f=L.indexOf(id);if(f<0||to<0||to>=L.length)return;snap();L.splice(f,1);L.splice(to,0,id);save();draw()}
+function log(id){
+  const prev=rects(),N=rt=='sp'?S.sn:S.qn;
+  snap();
+  N[id]=(N[id]||0)+1;S[rt]=S[rt].filter(i=>i!=id).concat(id);save();draw();play(prev);
+}
+function recencyV(b){
+  if(!S.roster.length||S.edit){
+    const ta=h('textarea',{class:'big',rows:14,placeholder:'One senator per line, in the PO\'s recency order (next to speak first)'});
+    ta.value=S.roster.map(r=>r.name).join('\n');
+    b.append(h('h2',{},'Chamber roster'),h('p',{class:'muted'},'Paste the names from the Tabroom seating chart, one per line, in the PO\'s starting recency order.'),ta,
+      h('button',{class:'primary',onclick:()=>{
+        const names=ta.value.split('\n').map(x=>x.trim()).filter(Boolean);if(!names.length)return;
+        const old=Object.fromEntries(S.roster.map(r=>[r.name,r.id])),first=!S.roster.length;
+        S.roster=names.map(n=>({id:old[n]||uid(),name:n}));const ids=S.roster.map(r=>r.id);
+        if(first){S.sp=ids.slice();S.q=ids.slice()}else for(const k of['sp','q']){S[k]=S[k].filter(i=>ids.includes(i));ids.forEach(i=>{if(!S[k].includes(i))S[k].push(i)})}
+        if(!ids.includes(S.me))S.me='';S.edit=false;save();draw()}},'Save roster'),S.roster.length?h('button',{class:'link',onclick:()=>{S.edit=false;draw()}},'Cancel'):'');
+    return;
+  }
+  const L=S[rt],N=rt=='sp'?S.sn:S.qn,nm=id=>(S.roster.find(r=>r.id==id)||{}).name||'?';
+  const sub=[['sp','Speeches'],['q','Questions']].map(([k,l])=>h('button',{class:'tab'+(rt==k?' on':''),onclick:()=>{rt=k;draw()}},l));
+  const me=h('select',{'aria-label':'Which senator are you',onchange:e=>{S.me=e.target.value;save();draw()}},h('option',{value:''},'I am…'),S.roster.map(r=>h('option',{value:r.id,selected:r.id==S.me},r.name)));
+  const pos=S.me?L.indexOf(S.me)+1:0;
+  let dragId=null;
+  const ul=h('ul',{class:'rl'},L.map((id,i)=>h('li',{'data-id':id,draggable:true,class:id==S.me?'me':'',
+    ondragstart:()=>{dragId=id},ondragover:e=>e.preventDefault(),
+    ondrop:e=>{e.preventDefault();if(dragId&&dragId!=id)mv(dragId,L.indexOf(id))}},
+    h('span',{class:'n'},i+1),
+    h('button',{class:'nm',title:'Tap to log',onclick:()=>reord?0:log(id)},nm(id)),reord?h('span',{class:'mvb'},h('button',{'aria-label':'Move up',onclick:()=>mv(id,i-1)},'▲'),h('button',{'aria-label':'Move down',onclick:()=>mv(id,i+1)},'▼')):'',
+    h('span',{class:'ct'},'S'+(S.sn[id]||0)+'  Q'+(S.qn[id]||0)))));
+  b.append(
+    h('div',{class:'rw'},h('div',{class:'rw'},sub),me,
+      h('button',{onclick:()=>{reord=!reord;draw()}},reord?'Done':'Reorder'),h('button',{onclick:()=>{snap();S[rt].reverse();save();draw()}},'Flip'),
+      h('button',{disabled:!S.undo.length,onclick:()=>{const[a,c,d,e]=JSON.parse(S.undo.pop());S.sp=a;S.q=c;S.sn=d;S.qn=e;save();draw()}},'Undo'),
+      h('button',{class:'link',onclick:()=>{S.edit=true;draw()}},'Edit roster')),
+    S.me?h('div',{class:'ban'+(pos<=3?' near':'')},'You are '+ord(pos)+' in line for '+(rt=='sp'?'speeches':'questions')+(pos==1?'. You are up next.':'.')):h('p',{class:'muted'},'Pick yourself above to see your place in line.'),
+    h('p',{class:'muted'},'Tap a name when they are recognized. Drag to correct the order. Top of the list is next.'),ul);
+}
+
+/* ---------- flow: aff and neg columns per bill ---------- */
+function suggest(t,bar){
+const s=getSelection();bar.replaceChildren();cur=null;
+if(!s.rangeCount||!s.isCollapsed||!t.contains(s.anchorNode)||s.anchorNode.nodeType!=3)return;
+const w=(s.anchorNode.nodeValue.slice(0,s.anchorOffset).match(/[A-Za-z'.-]+$/)||[''])[0];if(w.length<2)return;
+const k=w.toLowerCase();
+S.roster.filter(r=>r.name.toLowerCase().split(/\s+/).some(x=>x.startsWith(k))).slice(0,6).forEach((r,j)=>{if(!j)cur={t,w,name:r.name};bar.append(h('button',{class:'chip',onmousedown:e=>{e.preventDefault();fill(w,r.name)}},(j?'':'⇥ ')+r.name))});
+}
+function fill(w,name){const s=getSelection(),n=s.anchorNode,o=s.anchorOffset;if(!n||n.nodeType!=3||o<w.length)return;const r=document.createRange();r.setStart(n,o-w.length);r.setEnd(n,o);s.removeAllRanges();s.addRange(r);document.execCommand('insertText',false,name+' ')}
+function flowV(b){
+  const bl=S.bills.find(x=>x.id==S.bill)||S.bills[0];S.bill=bl.id;
+  const fresh=()=>({id:uid(),name:'',rows:[{a:'',n:''},{a:'',n:''},{a:'',n:''}]});
+  const bn=h('input',{placeholder:'Bill name',maxlength:60,'aria-label':'New bill name'});
+  const addB=()=>{const n=bn.value.trim();if(!n)return;const nb=fresh();nb.name=n;S.bills.push(nb);S.bill=nb.id;adding=false;save();draw()};
+  bn.onkeydown=e=>{if(e.key=='Enter')addB();if(e.key=='Escape'){adding=false;draw()}};if(adding)setTimeout(()=>bn.focus());
+  const tabs=h('div',{class:'rw'},S.bills.map(x=>h('button',{class:'tab'+(x==bl?' on':''),onclick:()=>{S.bill=x.id;save();draw()}},x.name||'Untitled bill')),
+    adding?h('span',{class:'rw'},bn,h('button',{class:'primary',onclick:addB},'Add'),h('button',{class:'link',onclick:()=>{adding=false;draw()}},'Cancel')):h('button',{onclick:()=>{adding=true;draw()}},'+ Bill'));
+  const nameIn=h('input',{value:bl.name,maxlength:60,placeholder:'Bill name','aria-label':'Bill name',oninput:e=>{bl.name=e.target.value;save()}});
+  const bar=h('div',{class:'sug'}),g=h('div',{class:'fg'},h('div',{class:'fh a'},'Aff'),h('div',{class:'fh n'},'Neg'));
+  bl.rows.forEach((r,i)=>{
+    if(r.div)return g.append(h('div',{class:'div'},h('button',{class:'link',onclick:()=>{bl.rows.splice(i,1);save();draw()}},'Remove line')));
+    ['a','n'].forEach(c=>{const t=rte(r,c,{class:'cell '+c,role:'textbox','aria-multiline':'true','aria-label':(c=='a'?'Aff':'Neg')+' row '+(i+1)});
+t.addEventListener('input',()=>suggest(t,bar));t.onkeyup=e=>{if(e.key.startsWith('Arrow'))suggest(t,bar)};t.onkeydown=e=>{if(e.key=='Tab'&&!e.shiftKey&&cur&&cur.t==t){e.preventDefault();fill(cur.w,cur.name)}};g.append(t)});
+  });
+  const add=(o)=>()=>{bl.rows.push(o());save();draw()};
+  b.append(tabs,h('div',{class:'rw'},nameIn,S.bills.length>1?(cfm=='b'+bl.id?h('span',{class:'rw'},h('button',{class:'danger',onclick:()=>{S.bills=S.bills.filter(x=>x!=bl);S.bill=S.bills[0].id;cfm=null;save();draw()}},'Yes, delete bill'),h('button',{class:'link',onclick:()=>{cfm=null;draw()}},'Cancel')):h('button',{class:'link',onclick:()=>{cfm='b'+bl.id;draw()}},'Delete bill')):''),bar,g,
+    h('div',{class:'rw'},h('button',{onclick:add(()=>({a:'',n:''}))},'+ Row')),qbox(bl));
+}
+
+/* ---------- questions per bill ---------- */
+function qbox(bl){bl.qs=bl.qs||[];const out=h('ul',{class:'ql'}),inp=h('input',{placeholder:'Question to ask, press Enter',maxlength:300,'aria-label':'New question'});
+  const rank=q=>q.done?2:q.flag?0:1,set=(q,k)=>{q.flag=k=='flag'?!q.flag:false;q.done=k=='done'?!q.done:false;save();paint()};
+  const paint=()=>out.replaceChildren(...(bl.qs.length?[...bl.qs].sort((a,b)=>rank(a)-rank(b)).map(q=>{const o=qo.has(q.id);return h('li',{class:q.done?'done':q.flag?'flag':''},rte(q,'text',{class:'qt',onkeydown:e=>{if(e.key=='Enter'){e.preventDefault();e.target.blur()}}}),
+    h('button',{class:'link','aria-pressed':!!q.flag,onclick:()=>set(q,'flag')},q.flag?'⚑ Unanswered':'⚐ Flag'),
+    h('button',{class:'link','aria-pressed':!!q.done,onclick:()=>set(q,'done')},q.done?'✓ Answered':'Answered?'),
+    h('button',{class:'nt'+(o?' on':''),'aria-expanded':o,onclick:()=>{o?qo.delete(q.id):qo.add(q.id);paint()}},'Notes'+(q.note?' •':'')),
+    h('button',{class:'link','aria-label':'Delete question',onclick:()=>{bl.qs=bl.qs.filter(x=>x!=q);save();paint()}},'✕'),
+    o?rte(q,'note',{class:'qn bx','aria-label':'Notes on answer','data-ph':'What they said'}):'')}):[h('li',{class:'muted'},'No questions yet.')]));
+  inp.onkeydown=e=>{if(e.key=='Enter'&&inp.value.trim()){bl.qs.unshift({id:uid(),text:inp.value.trim(),flag:false,done:false,note:''});inp.value='';save();paint()}};paint();
+  return h('section',{class:'box'},h('h2',{},'Questions'),h('p',{class:'muted'},'Flag a question if it went unanswered. Mark it Answered to strike it through, and use Notes for what they said.'),inp,out)}
+const qo=new Set();
+/* ---------- bill tab ---------- */
+function billV(b){const bl=S.bills.find(x=>x.id==S.bill)||S.bills[0];
+  const sel=h('select',{'aria-label':'Bill',onchange:e=>{S.bill=e.target.value;save();draw()}},S.bills.map(x=>h('option',{value:x.id,selected:x==bl},x.name||'Untitled bill')));
+  const box=(k,t,p)=>h('div',{class:'box'},h('h2',{},t),h('div',{class:'rw'},fb('B','bold','Bold'),fb('I','italic','Italic')),rte(bl,k,{class:'big bx lg','aria-label':t,'data-ph':p}));
+  b.append(h('div',{class:'rw'},sel),box('speech','Contentions and speech','Your full speech or contentions'),box('text','Bill text','Paste the legislation, or write it here if you are authoring it'))}
+/* ---------- did you final ---------- */
+function finals(){const n=db.sessions.length;if(n<3||n<(db.fin||0)+3)return;
+  const box=h('div',{class:'mod',role:'dialog','aria-modal':'true'}),ov=h('div',{class:'mback'},box);
+  const done=()=>{ov.remove();removeEventListener('keydown',esc)},esc=e=>{if(e.key=='Escape')done()};addEventListener('keydown',esc);
+  const ans=y=>{db.fin=n;save();box.replaceChildren(h('h2',{},y?'Congrats, finalist!':'Womp womp.'),h('p',{class:'muted'},y?'Start another session whenever you are ready.':'Shake it off. Start a new session anytime.'),h('div',{class:y?'em':'em sad'},y?'🎉':'😞'),h('button',{class:'primary',onclick:done},'Close'));
+    if(y)for(let i=0;i<60;i++)ov.append(h('i',{class:'cf',style:'left:'+Math.random()*100+'%;background:hsl('+Math.random()*360+',85%,55%);animation-delay:'+Math.random()*.8+'s;animation-duration:'+(1.6+Math.random()*1.4)+'s'}))};
+  box.append(h('h2',{},'Did you final?'),h('div',{class:'rw'},h('button',{class:'primary',onclick:()=>ans(1)},'Yes'),h('button',{onclick:()=>ans(0)},'No')));document.body.append(ov)}
+/* ---------- evidence cards ---------- */
+function cardsV(b){
+  const bi=h('select',{'aria-label':'Bill'},h('option',{value:''},'General'),S.bills.map(x=>h('option',{},x.name))),
+    tg=h('input',{placeholder:'Tag, e.g. economy',maxlength:60}),sr=h('input',{placeholder:'Source: author, outlet, date',maxlength:200}),
+    tx=h('textarea',{class:'big',rows:4,placeholder:'Quote or evidence'}),q=h('input',{type:'search',class:'big',placeholder:'Search cards'}),out=h('div');
+  const paint=()=>{const k=q.value.toLowerCase(),m=S.cards.filter(c=>!k||[c.bill,c.tag,c.src,c.text].join(' ').toLowerCase().includes(k));
+    out.replaceChildren(...(m.length?m.map(c=>h('article',{class:'card'},h('div',{class:'muted'},[c.bill||'General',c.tag].filter(Boolean).join(', ')),rte(c,'text',{},'p'),h('div',{class:'muted'},c.src||'No source'),
+      h('button',{class:'link',onclick:()=>{S.cards=S.cards.filter(x=>x!=c);save();paint()}},'Delete'))):[h('p',{class:'muted'},S.cards.length?'No cards match that search.':'No cards yet. Add one above with its source.')]))};
+  q.oninput=paint;
+  b.append(h('div',{class:'box'},h('h2',{},'New evidence card'),h('div',{class:'rw'},bi,tg,sr),tx,
+    h('button',{class:'primary',onclick:()=>{if(!tx.value.trim())return;S.cards.unshift({id:uid(),bill:bi.value,tag:tg.value.trim(),src:sr.value.trim(),text:tx.value.trim()});tx.value='';save();paint()}},'Save card')),q,out);
+  paint();
+}
+
+/* ---------- motion cheat sheet ---------- */
+const M=[['Main motion','I move that…','Yes','Yes','Majority'],['Postpone indefinitely','I move to postpone indefinitely','Yes','Yes','Majority'],['Amend','I move to amend','1/3','Yes','Majority'],['Amend an amendment','I move to amend the amendment','1/3','Yes','Majority'],['Refer to committee','I move to refer to committee','Yes','Yes','Majority'],['Postpone to a certain time','I move to postpone to…','Yes','Yes','Majority'],['Limit or extend debate','I move to limit or extend debate','Yes','Yes','2/3'],['Previous question','I move the previous question','Yes','No','2/3'],['Lay on the table','I move to lay the question on the table','Yes','No','Majority'],['Take from the table','I move to take from the table…','Yes','No','Majority'],['Reconsider','I move to reconsider','Yes','Yes','Majority'],['Rescind','I move to rescind','Yes','Yes','2/3'],['Suspend the rules','I move to suspend the rules','Yes','No','2/3'],['Object to consideration','I object to the consideration of the question','No','No','2/3'],['Divide a motion','I move to divide the motion','Yes','No','Majority'],['Division of the chamber','Division','No','No','Chair decides'],['Point of order or inquiry','I rise to a point of order (or parliamentary inquiry)','No','No','Chair decides'],['Appeal the chair\'s decision','I appeal the decision of the chair','Yes','No','Majority'],['Personal privilege','I rise to a point of personal privilege','No','No','Chair decides'],['Recess','I move to recess for…','Yes','Yes','Majority'],['Adjourn','I move to adjourn','Yes','No','Majority'],['Second a motion','Second!','','','']];
+function motionsV(b){
+  const q=h('input',{type:'search',class:'big',placeholder:'Search motions'}),tb=h('tbody');
+  const paint=()=>{const k=q.value.toLowerCase();tb.replaceChildren(...M.filter(m=>m.join(' ').toLowerCase().includes(k)).map(m=>h('tr',{},m.map(c=>h('td',{},c)))))};
+  q.oninput=paint;
+  b.append(q,h('div',{class:'scroll'},h('table',{},h('thead',{},h('tr',{},['Motion','Say','Second?','Debatable?','Vote'].map(x=>h('th',{},x)))),tb)));paint();
+}
+
+showList();
+</script>
+</body>
+</html>
